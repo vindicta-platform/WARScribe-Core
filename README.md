@@ -10,7 +10,6 @@ WARScribe-Core provides the canonical implementation of WARScribe notation, the 
 
 - **Notation Engine**: Parse and generate WARScribe format
 - **Schema Definition**: Official WARScribe JSON schema
-- **Validation**: Army list compliance checking
 - **Transformations**: Format conversions
 
 ## Installation
