@@ -2,13 +2,44 @@
 
 > **Vision**: The edition-agnostic notation engine for Warhammer gameplay  
 > **Status**: Active Development  
-> **Last Updated**: 2026-02-03
+> **Last Updated**: 2026-02-04
+
+---
+
+## 📅 6-Week Schedule (Feb 4 - Mar 17, 2026)
+
+> **GitHub Project**: https://github.com/orgs/vindicta-platform/projects/4  
+> **Master Roadmap**: https://github.com/vindicta-platform/.github/blob/master/ROADMAP.md
+
+### Week 1: Feb 4-10 — Schema Refinement
+| Day | Task | Priority |
+|-----|------|----------|
+| Mon 4 | Schema refinement and validation | P1 |
+| Tue 5 | Design edition abstraction layer | P1 |
+| Wed 6 | Implement edition abstraction interfaces | P1 |
+| Thu 7 | Unit tests for schema | P1 |
+| Fri 8 | Complete unit tests | P1 |
+| **Sun 10** | **v0.1.5 Schema Release** | ⭐ |
+
+### Week 2: Feb 11-17 — Edition Plugin
+| Day | Task | Priority |
+|-----|------|----------|
+| Mon 11 | Edition plugin architecture | P1 |
+| Tue 12 | 10th Edition plugin (part 1) | P1 |
+| Wed 13 | 10th Edition plugin (part 2) | P1 |
+| Thu 14 | Tests for edition plugin | P1 |
+| Fri 15 | Complete tests | P1 |
+| **Sun 17** | **v0.2.0 Edition Layer Release** | ⭐ |
+
+### Weeks 3-6: Continued Development
+*Focus on 11th Edition plugin scaffold and stable API for Primordia AI consumption*
 
 ---
 
 ## v1.0 Target: March 2026
 
 ### Mission Statement
+
 Deliver a stable, production-ready notation engine that records Warhammer games in a machine-readable format, supporting both 10th and 11th Edition through pluggable edition modules.
 
 ---
