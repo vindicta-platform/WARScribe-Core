@@ -11,17 +11,15 @@
 > **GitHub Project**: https://github.com/orgs/vindicta-platform/projects/4  
 > **Master Roadmap**: https://github.com/vindicta-platform/.github/blob/master/ROADMAP.md
 
-### Week 1: Feb 4-10 — Schema Refinement ✅
+### Week 1: Feb 4-10 — Schema Refinement
 | Day | Task | Priority | Status |
 |-----|------|----------|--------|
-| Mon 4 | Schema refinement and validation | P1 | ✅ PR #7 |
-| Tue 5 | Design edition abstraction layer | P1 | ✅ PR #8 |
-| Wed 6 | Implement edition abstraction interfaces | P1 | ✅ PR #8 |
-| Thu 7 | Unit tests for schema | P1 | ✅ PR #8 |
-| Fri 8 | Complete unit tests | P1 | ✅ 100% coverage |
-| **Sun 10** | **v0.1.5 Schema Release** | ⭐ | **On track** |
-
-**Status**: 100% complete ahead of schedule! Edition abstraction fully implemented with tests.
+| Mon 4 | Schema refinement and validation | P1 | [/] |
+| Tue 5 | Design edition abstraction layer | P1 | [x] ✅ |
+| Wed 6 | Implement edition abstraction interfaces | P1 | [/] |
+| Thu 7 | Unit tests for schema | P1 | [ ] |
+| Fri 8 | Complete unit tests | P1 | [ ] |
+| **Sun 10** | **v0.1.5 Schema Release** | ⭐ |
 
 ### Week 2: Feb 11-17 — Edition Plugin
 | Day | Task | Priority |
@@ -64,29 +62,121 @@ Deliver a stable, production-ready notation engine that records Warhammer games 
 ## v0.1.0 — Foundation (Target: Feb 10, 2026)
 
 ### Deliverables
-- [x] Extract warscribe module from platform-core
-- [x] Define core notation schema (JSON Schema)
-- [x] Implement basic notation engine
-- [x] Action types: Move, Shoot, Charge, Fight
-- [x] Unit reference system
-- [x] Transcript serialization (JSON)
-- [x] Edition abstraction layer (delivered early!)
+- [ ] Extract warscribe module from platform-core
+- [ ] Define core notation schema (JSON Schema)
+- [ ] Implement basic notation engine
+- [ ] Action types: Move, Shoot, Charge, Fight
+- [ ] Unit reference system
+- [ ] Transcript serialization (JSON)
 
 ### Key Measurable Results
-| Metric | Target | Status |
-|--------|--------|--------|
-| **Schema Coverage** | 100% of core action types | ✅ Complete |
-| **Serialization Round-trip** | 100% fidelity | ✅ Complete |
-| **Documentation** | API reference complete | ⚠️ EditionPlugin docs pending (Issue #9) |
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| **Schema Coverage** | 100% of core action types | Unit tests pass |
+| **Serialization Round-trip** | 100% fidelity | Parse → Serialize → Parse identical |
+| **Documentation** | API reference complete | All public methods documented |
 
 ### Exit Criteria
-- [x] `warscribe-core` package installable via pip
-- [x] Unit tests passing (100% coverage on edition abstraction)
-- [x] Edition plugin system implemented
-- [ ] README documentation complete (Issue #9 - Week 2)
-
-**Status**: 90% complete, 1 day ahead of schedule. Documentation pending.
+- [ ] `warscribe-core` package installable via pip
+- [ ] 10 example transcripts in test suite
+- [ ] README with installation and usage
 
 ---
 
-*Last Updated: 2026-02-05*
+## v0.2.0 — Edition Abstraction Layer (Target: Feb 24, 2026)
+
+### Deliverables
+- [x] Edition plugin interface ✅
+- [ ] 10th Edition plugin (complete)
+- [ ] 11th Edition plugin (scaffold)
+- [ ] Phase sequence validation
+- [ ] Action context (unit stats, modifiers)
+
+### Key Measurable Results
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| **Edition Isolation** | 0 edition-specific code in core | Code review |
+| **10th Ed Coverage** | All phases implemented | Integration tests |
+| **Plugin API Stability** | No breaking changes after v0.2 | Semantic versioning |
+
+### Exit Criteria
+- [ ] 10th Edition games recordable end-to-end
+- [ ] Edition plugin documentation
+- [ ] Migration guide for 11th Edition authors
+
+---
+
+## v1.0.0 — Production Release (Target: Mar 31, 2026)
+
+### Deliverables
+- [ ] Full spec compliance
+- [ ] 10th Edition plugin stable
+- [ ] 11th Edition plugin complete
+- [ ] PyPI publication
+- [ ] Comprehensive test suite (>90% coverage)
+- [ ] Performance optimization
+
+### Key Measurable Results
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| **Test Coverage** | >90% | pytest-cov report |
+| **Performance** | <100ms transcript parse | Benchmark suite |
+| **Adoption** | 100+ transcripts recorded | Usage telemetry |
+| **PyPI Downloads** | 50+/month | PyPI stats |
+
+### Exit Criteria
+- [ ] No critical bugs for 2 weeks
+- [ ] External contributor guide published
+- [ ] Primordia AI integration validated
+
+---
+
+## Key Stakeholders
+
+| Stakeholder | Interest |
+|-------------|----------|
+| **Primordia AI** | Primary consumer — structured training data |
+| **Logi-Slate-UI** | Frontend integration |
+| **Meta-Oracle** | Game outcome analysis |
+| **Community** | Battle report sharing |
+
+---
+
+## Dependencies
+
+| Dependency | Status | Notes |
+|------------|--------|-------|
+| platform-core | ✅ Exists | Extract warscribe module |
+| Pydantic v2 | ✅ Available | Schema validation |
+| Primordia AI | 🔄 Parallel dev | Consumer of transcripts |
+
+---
+
+## Risks
+
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|--------|------------|
+| 11th Edition delayed | Medium | High | Scaffold plugin early |
+| Schema changes break consumers | Low | High | Semantic versioning |
+| Performance issues at scale | Low | Medium | Benchmark from v0.1 |
+
+---
+
+## Out of Scope for v1
+
+- Army list validation (separate product)
+- Replay visualization (Logi-Slate responsibility)
+- Natural language parsing (WARScribe-Parser responsibility)
+
+---
+
+## Success Criteria for v1
+
+1. **Stability**: No breaking API changes for 6 months post-v1
+2. **Adoption**: Primordia AI training on 100+ transcripts
+3. **Extensibility**: Community can author edition plugins
+4. **Performance**: Sub-second transcript processing
+
+---
+
+*Maintained by: Vindicta Platform Team*
