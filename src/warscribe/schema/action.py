@@ -63,13 +63,29 @@ class BaseAction(BaseModel):
     notes: Optional[str] = Field(None, description="Optional notes about the action")
 
 
+class RelativeDistance(BaseModel):
+    """Distance change relative to another unit.
+    
+    The distance_inches in MoveAction is always positive (actual movement).
+    This tracks how that movement changed distance to specific targets.
+    
+    Positive = moved away, Negative = moved closer.
+    
+    Example: Unit moves 5" (positive) but ends up 3" closer to enemy → delta = -3.0
+    """
+    target_unit_id: UUID = Field(..., description="ID of the reference unit")
+    target_unit_name: Optional[str] = None
+    delta_inches: float = Field(..., description="Change in distance (negative = closer)")
+    final_distance: Optional[float] = Field(None, ge=0, description="Final distance to target")
+
+
 class MoveAction(BaseAction):
     """A movement action."""
     
     action_type: ActionType = ActionType.MOVE
     
-    # Movement details
-    distance_inches: float = Field(..., ge=0, description="Distance moved in inches")
+    # Movement details (ALWAYS positive - actual distance moved)
+    distance_inches: float = Field(..., ge=0, description="Distance moved in inches (always positive)")
     start_position: Optional[tuple[float, float]] = None
     end_position: Optional[tuple[float, float]] = None
     
@@ -77,6 +93,12 @@ class MoveAction(BaseAction):
     is_advance: bool = False
     is_fall_back: bool = False
     terrain_crossed: list[str] = Field(default_factory=list)
+    
+    # Relational distances (can be negative = moved closer)
+    relative_distances: list[RelativeDistance] = Field(
+        default_factory=list,
+        description="Distance changes relative to other units (negative = closer)"
+    )
 
 
 class ShootAction(BaseAction):
