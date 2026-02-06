@@ -12,13 +12,13 @@
 > **Master Roadmap**: https://github.com/vindicta-platform/.github/blob/master/ROADMAP.md
 
 ### Week 1: Feb 4-10 — Schema Refinement
-| Day | Task | Priority | Status |
-|-----|------|----------|--------|
-| Mon 4 | Schema refinement and validation | P1 | [/] |
-| Tue 5 | Design edition abstraction layer | P1 | [x] ✅ |
-| Wed 6 | Implement edition abstraction interfaces | P1 | [/] |
-| Thu 7 | Unit tests for schema | P1 | [ ] |
-| Fri 8 | Complete unit tests | P1 | [ ] |
+| Day | Task | Priority |
+|-----|------|----------|
+| Mon 4 | Schema refinement and validation | P1 | [x] |
+| Tue 5 | Design edition abstraction layer | P1 | [x] |
+| Wed 6 | Implement edition abstraction interfaces | P1 |
+| Thu 7 | Unit tests for schema | P1 |
+| Fri 8 | Complete unit tests | P1 |
 | **Sun 10** | **v0.1.5 Schema Release** | ⭐ |
 
 ### Week 2: Feb 11-17 — Edition Plugin
@@ -86,7 +86,7 @@ Deliver a stable, production-ready notation engine that records Warhammer games 
 ## v0.2.0 — Edition Abstraction Layer (Target: Feb 24, 2026)
 
 ### Deliverables
-- [x] Edition plugin interface ✅
+- [ ] Edition plugin interface
 - [ ] 10th Edition plugin (complete)
 - [ ] 11th Edition plugin (scaffold)
 - [ ] Phase sequence validation
