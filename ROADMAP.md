@@ -2,7 +2,7 @@
 
 > **Vision**: The edition-agnostic notation engine for Warhammer gameplay  
 > **Status**: Active Development  
-> **Last Updated**: 2026-02-04
+> **Last Updated**: 2026-02-05
 
 ---
 
@@ -14,8 +14,8 @@
 ### Week 1: Feb 4-10 — Schema Refinement
 | Day | Task | Priority |
 |-----|------|----------|
-| Mon 4 | Schema refinement and validation | P1 |
-| Tue 5 | Design edition abstraction layer | P1 |
+| Mon 4 | Schema refinement and validation | P1 | [x] |
+| Tue 5 | Design edition abstraction layer | P1 | [x] |
 | Wed 6 | Implement edition abstraction interfaces | P1 |
 | Thu 7 | Unit tests for schema | P1 |
 | Fri 8 | Complete unit tests | P1 |
