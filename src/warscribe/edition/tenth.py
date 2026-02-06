@@ -12,7 +12,14 @@ from warscribe.edition import (
     PhaseDefinition,
     ValidationResult,
 )
-from warscribe.schema.action import Action, ActionType, MoveAction, ChargeAction
+from warscribe.schema.action import (
+    Action,
+    ActionType,
+    MoveAction,
+    ChargeAction,
+    ShootAction,
+    FightAction,
+)
 
 
 class TenthEditionPlugin(EditionPlugin):
@@ -124,6 +131,10 @@ class TenthEditionPlugin(EditionPlugin):
             result = self._validate_move(action, result)
         elif isinstance(action, ChargeAction):
             result = self._validate_charge(action, result)
+        elif isinstance(action, ShootAction):
+            result = self._validate_shoot(action, result)
+        elif isinstance(action, FightAction):
+            result = self._validate_fight(action, result)
         
         return result
     
@@ -171,6 +182,76 @@ class TenthEditionPlugin(EditionPlugin):
                     f"Charge marked as successful but roll ({total_roll}) "
                     f"is less than distance needed ({action.distance_needed})."
                 )
+        
+        return result
+    
+    def _validate_shoot(
+        self, action: ShootAction, result: ValidationResult
+    ) -> ValidationResult:
+        """Validate a shooting action.
+        
+        Issue #6: Action validation working.
+        """
+        # Basic sanity checks
+        if action.shots < 1:
+            return ValidationResult.failure("Must have at least 1 shot.")
+        
+        # Hits cannot exceed shots
+        if action.hits > action.shots:
+            return ValidationResult.failure(
+                f"Hits ({action.hits}) cannot exceed shots ({action.shots})."
+            )
+        
+        # Wounds cannot exceed hits
+        if action.wounds > action.hits:
+            result.add_warning(
+                f"Wounds ({action.wounds}) exceed hits ({action.hits}). "
+                "Verify re-rolls or abilities."
+            )
+        
+        # Saves failed cannot exceed wounds
+        if action.saves_failed > action.wounds:
+            result.add_warning(
+                f"Saves failed ({action.saves_failed}) exceed wounds ({action.wounds})."
+            )
+        
+        # Models killed should be reasonable
+        if action.models_killed > action.saves_failed:
+            result.add_warning(
+                f"Models killed ({action.models_killed}) exceeds saves failed "
+                f"({action.saves_failed}). Multi-damage weapon?"
+            )
+        
+        return result
+    
+    def _validate_fight(
+        self, action: FightAction, result: ValidationResult
+    ) -> ValidationResult:
+        """Validate a fight (melee) action.
+        
+        Issue #6: Action validation working.
+        """
+        # Basic sanity checks
+        if action.attacks < 1:
+            return ValidationResult.failure("Must have at least 1 attack.")
+        
+        # Hits cannot exceed attacks
+        if action.hits > action.attacks:
+            return ValidationResult.failure(
+                f"Hits ({action.hits}) cannot exceed attacks ({action.attacks})."
+            )
+        
+        # Same cascade validation as shooting
+        if action.wounds > action.hits:
+            result.add_warning(
+                f"Wounds ({action.wounds}) exceed hits ({action.hits}). "
+                "Verify re-rolls or abilities."
+            )
+        
+        if action.saves_failed > action.wounds:
+            result.add_warning(
+                f"Saves failed ({action.saves_failed}) exceed wounds ({action.wounds})."
+            )
         
         return result
 
