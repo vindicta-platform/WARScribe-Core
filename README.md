@@ -3,22 +3,18 @@
 Core notation engine for the WARScribe data format.
 
 ## Overview
-
 WARScribe-Core provides the canonical implementation of WARScribe notation, the standard format for army list representation in competitive Warhammer.
 
 ## Features
-
 - **Notation Engine**: Parse and generate WARScribe format
 - **Schema Definition**: Official WARScribe JSON schema
 - **Transformations**: Format conversions
 - **Edition Plugin System**: Pluggable edition-specific rule implementations
 
 ## Edition Plugin System
-
 WARScribe-Core uses a plugin architecture to support multiple Warhammer editions (10th, 11th, Horus Heresy) through a common `EditionPlugin` interface.
 
 ### Plugin Interface
-
 All edition plugins must implement:
 
 ```python
@@ -57,7 +53,6 @@ class CustomEditionPlugin(EditionPlugin):
 ```
 
 ### Using Plugins
-
 ```python
 from warscribe.edition.tenth import TenthEditionPlugin
 
@@ -75,15 +70,11 @@ if not valid:
 ```
 
 ### Reference Implementation
-
 See [`TenthEditionPlugin`](src/warscribe/edition/tenth.py) for the canonical 10th Edition implementation (Pariah Nexus season).
-
-## Edition Plugin System
 
 WARScribe-Core uses a pluggable architecture to support different Warhammer editions (9th, 10th, 11th, Horus Heresy). Each edition implements the `EditionPlugin` interface to define its unique phases, rules, and action validation.
 
 ### EditionPlugin Interface
-
 The abstract `EditionPlugin` class defines the contract for edition implementations:
 
 | Property/Method | Return Type | Description |
@@ -96,7 +87,6 @@ The abstract `EditionPlugin` class defines the contract for edition implementati
 Helper methods are provided: `get_phase()`, `get_phase_order()`, `get_next_phase()`, `is_action_allowed_in_phase()`.
 
 ### EditionRegistry
-
 The `EditionRegistry` manages plugin discovery and access:
 
 ```python
@@ -116,7 +106,6 @@ print(registry.available_editions)  # ["10th"]
 ```
 
 ### Creating a Custom Edition
-
 To support a new edition, subclass `EditionPlugin`:
 
 ```python
@@ -171,11 +160,9 @@ class NinthEditionPlugin(EditionPlugin):
 ```
 
 ### Reference Implementation
-
 See [`TenthEditionPlugin`](src/warscribe/edition/tenth.py) for a complete reference implementation of the 10th Edition rules.
 
 ## Installation
-
 ```bash
 uv pip install git+https://github.com/vindicta-platform/WARScribe-Core.git
 ```
@@ -189,12 +176,20 @@ uv pip install -e .
 ```
 
 ## Related Repositories
-
 | Repository | Relationship |
 |------------|-------------|
 | [WARScribe-Parser](https://github.com/vindicta-platform/WARScribe-Parser) | High-level parser |
 | [WARScribe-CLI](https://github.com/vindicta-platform/WARScribe-CLI) | CLI tools |
 
-## License
+## Platform Documentation
 
+> **📌 Important:** All cross-cutting decisions, feature proposals, and platform-wide architecture documentation live in [**Platform-Docs**](https://github.com/vindicta-platform/Platform-Docs).
+>
+> Any decision affecting multiple repos **must** be recorded there before implementation.
+
+- 📋 [Feature Proposals](https://github.com/vindicta-platform/Platform-Docs/tree/main/docs/proposals)
+- 🏗️ [Architecture Decisions](https://github.com/vindicta-platform/Platform-Docs/tree/main/docs)
+- 📖 [Contributing Guide](https://github.com/vindicta-platform/Platform-Docs/blob/main/CONTRIBUTING.md)
+
+## License
 MIT License - See [LICENSE](./LICENSE) for details.
