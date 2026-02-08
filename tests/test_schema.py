@@ -2,10 +2,6 @@
 Unit tests for WARScribe-Core schema.
 """
 
-import json
-import pytest
-from uuid import uuid4
-
 from warscribe.schema.unit import UnitReference
 from warscribe.schema.action import (
     ActionType,
@@ -23,21 +19,21 @@ class TestUnitReference:
     def test_unit_reference_creation(self):
         """UnitReference should be creatable."""
         unit = UnitReference(name="Intercessors A", faction="Space Marines")
-        
+
         assert unit.name == "Intercessors A"
         assert unit.faction == "Space Marines"
 
     def test_unit_reference_str(self):
         """str() should return readable format."""
         unit = UnitReference(name="Crisis Suits", faction="T'au Empire")
-        
+
         assert "Crisis Suits" in str(unit)
         assert "T'au Empire" in str(unit)
 
     def test_short_ref(self):
         """short_ref should truncate long names."""
         unit = UnitReference(name="Very Long Unit Name Here", faction="F")
-        
+
         short = unit.short_ref()
         assert len(short) <= 12
 
@@ -48,14 +44,9 @@ class TestActions:
     def test_move_action(self):
         """MoveAction should record movement."""
         actor = UnitReference(name="Squad A", faction="Marines")
-        
-        action = MoveAction(
-            turn=1,
-            phase="movement",
-            actor=actor,
-            distance_inches=6.0
-        )
-        
+
+        action = MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6.0)
+
         assert action.action_type == ActionType.MOVE
         assert action.distance_inches == 6.0
 
@@ -63,7 +54,7 @@ class TestActions:
         """ShootAction should record shooting."""
         actor = UnitReference(name="Devastators", faction="Marines")
         target = UnitReference(name="Orks", faction="Orks")
-        
+
         action = ShootAction(
             turn=2,
             phase="shooting",
@@ -73,9 +64,9 @@ class TestActions:
             shots=2,
             hits=1,
             wounds=1,
-            damage_dealt=6
+            damage_dealt=6,
         )
-        
+
         assert action.action_type == ActionType.SHOOT
         assert action.damage_dealt == 6
 
@@ -83,7 +74,7 @@ class TestActions:
         """ChargeAction should record charges."""
         actor = UnitReference(name="Assault Marines", faction="Marines")
         target = UnitReference(name="Guardsmen", faction="Astra Militarum")
-        
+
         action = ChargeAction(
             turn=2,
             phase="charge",
@@ -91,9 +82,9 @@ class TestActions:
             targets=[target],
             charge_roll=(4, 5),
             distance_needed=7.0,
-            made_charge=True
+            made_charge=True,
         )
-        
+
         assert action.action_type == ActionType.CHARGE
         assert action.made_charge
 
@@ -101,7 +92,7 @@ class TestActions:
         """FightAction should record melee."""
         actor = UnitReference(name="Assault Marines", faction="Marines")
         target = UnitReference(name="Guardsmen", faction="Astra Militarum")
-        
+
         action = FightAction(
             turn=2,
             phase="fight",
@@ -111,9 +102,9 @@ class TestActions:
             attacks=10,
             hits=7,
             wounds=5,
-            models_killed=5
+            models_killed=5,
         )
-        
+
         assert action.action_type == ActionType.FIGHT
         assert action.models_killed == 5
 
@@ -125,13 +116,9 @@ class TestGameTranscript:
         """GameTranscript should be creatable."""
         p1 = Player(name="Alice", faction="Space Marines")
         p2 = Player(name="Bob", faction="Orks")
-        
-        transcript = GameTranscript(
-            player1=p1,
-            player2=p2,
-            mission="Scorched Earth"
-        )
-        
+
+        transcript = GameTranscript(player1=p1, player2=p2, mission="Scorched Earth")
+
         assert transcript.player1.name == "Alice"
         assert transcript.mission == "Scorched Earth"
 
@@ -140,12 +127,12 @@ class TestGameTranscript:
         p1 = Player(name="A", faction="F1")
         p2 = Player(name="B", faction="F2")
         transcript = GameTranscript(player1=p1, player2=p2)
-        
+
         actor = UnitReference(name="Unit", faction="F1")
         action = MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6)
-        
+
         transcript.add_action(action)
-        
+
         assert len(transcript.actions) == 1
 
     def test_get_actions_for_turn(self):
@@ -153,37 +140,41 @@ class TestGameTranscript:
         p1 = Player(name="A", faction="F1")
         p2 = Player(name="B", faction="F2")
         transcript = GameTranscript(player1=p1, player2=p2)
-        
+
         actor = UnitReference(name="Unit", faction="F1")
-        
-        transcript.add_action(MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6))
-        transcript.add_action(MoveAction(turn=2, phase="movement", actor=actor, distance_inches=6))
-        transcript.add_action(MoveAction(turn=2, phase="movement", actor=actor, distance_inches=6))
-        
+
+        transcript.add_action(
+            MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6)
+        )
+        transcript.add_action(
+            MoveAction(turn=2, phase="movement", actor=actor, distance_inches=6)
+        )
+        transcript.add_action(
+            MoveAction(turn=2, phase="movement", actor=actor, distance_inches=6)
+        )
+
         turn2_actions = transcript.get_actions_for_turn(2)
-        
+
         assert len(turn2_actions) == 2
 
     def test_json_serialization(self):
         """Transcript should round-trip through JSON."""
         p1 = Player(name="Alice", faction="Space Marines")
         p2 = Player(name="Bob", faction="Orks")
-        
-        transcript = GameTranscript(
-            player1=p1,
-            player2=p2,
-            mission="Test Mission"
-        )
-        
+
+        transcript = GameTranscript(player1=p1, player2=p2, mission="Test Mission")
+
         actor = UnitReference(name="Unit", faction="F1")
-        transcript.add_action(MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6))
-        
+        transcript.add_action(
+            MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6)
+        )
+
         # Serialize
         json_str = transcript.to_json()
-        
+
         # Deserialize
         restored = GameTranscript.from_json(json_str)
-        
+
         assert restored.player1.name == "Alice"
         assert restored.mission == "Test Mission"
         assert len(restored.actions) == 1
@@ -201,12 +192,12 @@ class TestActionRoundTripSerialization:
             actor=actor,
             distance_inches=6.5,
             is_advance=True,
-            terrain_crossed=["ruins", "crater"]
+            terrain_crossed=["ruins", "crater"],
         )
-        
+
         json_str = action.model_dump_json()
         restored = MoveAction.model_validate_json(json_str)
-        
+
         assert restored.action_type == ActionType.MOVE
         assert restored.distance_inches == 6.5
         assert restored.is_advance is True
@@ -216,7 +207,7 @@ class TestActionRoundTripSerialization:
         """ShootAction should preserve all dice results."""
         actor = UnitReference(name="Devastators", faction="Marines")
         target = UnitReference(name="Boyz", faction="Orks")
-        
+
         action = ShootAction(
             turn=2,
             phase="shooting",
@@ -228,12 +219,12 @@ class TestActionRoundTripSerialization:
             wounds=2,
             saves_failed=2,
             damage_dealt=12,
-            models_killed=2
+            models_killed=2,
         )
-        
+
         json_str = action.model_dump_json()
         restored = ShootAction.model_validate_json(json_str)
-        
+
         assert restored.weapon_name == "Multi-melta"
         assert restored.damage_dealt == 12
         assert restored.models_killed == 2
@@ -243,7 +234,7 @@ class TestActionRoundTripSerialization:
         actor = UnitReference(name="Assault Marines", faction="Marines")
         target1 = UnitReference(name="Guardsmen A", faction="Astra Militarum")
         target2 = UnitReference(name="Guardsmen B", faction="Astra Militarum")
-        
+
         action = ChargeAction(
             turn=2,
             phase="charge",
@@ -251,12 +242,12 @@ class TestActionRoundTripSerialization:
             targets=[target1, target2],
             charge_roll=(5, 6),
             distance_needed=8.0,
-            made_charge=True
+            made_charge=True,
         )
-        
+
         json_str = action.model_dump_json()
         restored = ChargeAction.model_validate_json(json_str)
-        
+
         assert len(restored.targets) == 2
         assert restored.charge_roll == (5, 6)
         assert restored.made_charge is True
@@ -265,7 +256,7 @@ class TestActionRoundTripSerialization:
         """FightAction should preserve combat results."""
         actor = UnitReference(name="Terminators", faction="Marines")
         target = UnitReference(name="Genestealers", faction="Tyranids")
-        
+
         action = FightAction(
             turn=3,
             phase="fight",
@@ -277,12 +268,12 @@ class TestActionRoundTripSerialization:
             wounds=3,
             saves_failed=2,
             damage_dealt=6,
-            models_killed=2
+            models_killed=2,
         )
-        
+
         json_str = action.model_dump_json()
         restored = FightAction.model_validate_json(json_str)
-        
+
         assert restored.weapon_name == "Thunder Hammer"
         assert restored.damage_dealt == 6
 
@@ -294,21 +285,23 @@ class TestEdgeCases:
         """Movement of 0 inches should be valid."""
         actor = UnitReference(name="Unit", faction="F1")
         action = MoveAction(turn=1, phase="movement", actor=actor, distance_inches=0.0)
-        
+
         assert action.distance_inches == 0.0
 
     def test_move_fractional_distance(self):
         """Fractional movement should be preserved."""
         actor = UnitReference(name="Unit", faction="F1")
-        action = MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6.283)
-        
+        action = MoveAction(
+            turn=1, phase="movement", actor=actor, distance_inches=6.283
+        )
+
         assert action.distance_inches == 6.283
 
     def test_shoot_zero_hits(self):
         """Shooting with zero hits is valid (all misses)."""
         actor = UnitReference(name="Shooter", faction="F1")
         target = UnitReference(name="Target", faction="F2")
-        
+
         action = ShootAction(
             turn=1,
             phase="shooting",
@@ -318,9 +311,9 @@ class TestEdgeCases:
             shots=10,
             hits=0,
             wounds=0,
-            damage_dealt=0
+            damage_dealt=0,
         )
-        
+
         assert action.hits == 0
         assert action.damage_dealt == 0
 
@@ -328,7 +321,7 @@ class TestEdgeCases:
         """Failed charge should be recordable."""
         actor = UnitReference(name="Unit", faction="F1")
         target = UnitReference(name="Target", faction="F2")
-        
+
         action = ChargeAction(
             turn=2,
             phase="charge",
@@ -336,16 +329,16 @@ class TestEdgeCases:
             targets=[target],
             charge_roll=(1, 2),
             distance_needed=10.0,
-            made_charge=False
+            made_charge=False,
         )
-        
+
         assert action.made_charge is False
         assert sum(action.charge_roll) < action.distance_needed
 
     def test_unit_reference_with_special_characters(self):
         """Unit names with special characters should work."""
         unit = UnitReference(name="T'au Commander (Crisis)", faction="T'au Empire")
-        
+
         assert "T'au" in unit.name
         assert "(Crisis)" in unit.name
 
@@ -357,9 +350,9 @@ class TestEdgeCases:
             phase="movement",
             actor=actor,
             distance_inches=6.0,
-            notes="Moved through difficult terrain, -2\" penalty applied"
+            notes='Moved through difficult terrain, -2" penalty applied',
         )
-        
+
         assert "difficult terrain" in action.notes
 
     def test_transcript_empty_actions(self):
@@ -367,10 +360,10 @@ class TestEdgeCases:
         p1 = Player(name="A", faction="F1")
         p2 = Player(name="B", faction="F2")
         transcript = GameTranscript(player1=p1, player2=p2)
-        
+
         json_str = transcript.to_json()
         restored = GameTranscript.from_json(json_str)
-        
+
         assert len(restored.actions) == 0
 
     def test_transcript_multiple_action_types(self):
@@ -378,26 +371,53 @@ class TestEdgeCases:
         p1 = Player(name="A", faction="F1")
         p2 = Player(name="B", faction="F2")
         transcript = GameTranscript(player1=p1, player2=p2)
-        
+
         actor = UnitReference(name="Unit A", faction="F1")
         target = UnitReference(name="Target B", faction="F2")
-        
-        transcript.add_action(MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6))
-        transcript.add_action(ShootAction(
-            turn=1, phase="shooting", actor=actor, target=target,
-            weapon_name="Bolter", shots=2, hits=1, wounds=1, damage_dealt=1
-        ))
-        transcript.add_action(ChargeAction(
-            turn=1, phase="charge", actor=actor, targets=[target],
-            charge_roll=(4, 4), distance_needed=7, made_charge=True
-        ))
-        transcript.add_action(FightAction(
-            turn=1, phase="fight", actor=actor, target=target,
-            weapon_name="Chainsword", attacks=3, hits=2, wounds=1, models_killed=1
-        ))
-        
+
+        transcript.add_action(
+            MoveAction(turn=1, phase="movement", actor=actor, distance_inches=6)
+        )
+        transcript.add_action(
+            ShootAction(
+                turn=1,
+                phase="shooting",
+                actor=actor,
+                target=target,
+                weapon_name="Bolter",
+                shots=2,
+                hits=1,
+                wounds=1,
+                damage_dealt=1,
+            )
+        )
+        transcript.add_action(
+            ChargeAction(
+                turn=1,
+                phase="charge",
+                actor=actor,
+                targets=[target],
+                charge_roll=(4, 4),
+                distance_needed=7,
+                made_charge=True,
+            )
+        )
+        transcript.add_action(
+            FightAction(
+                turn=1,
+                phase="fight",
+                actor=actor,
+                target=target,
+                weapon_name="Chainsword",
+                attacks=3,
+                hits=2,
+                wounds=1,
+                models_killed=1,
+            )
+        )
+
         assert len(transcript.actions) == 4
-        
+
         # Verify each type is correct
         types = [a.action_type for a in transcript.actions]
         assert ActionType.MOVE in types
@@ -426,4 +446,3 @@ class TestActionTypeEnum:
         assert ActionType.STRATAGEM.value == "stratagem"
         assert ActionType.ABILITY.value == "ability"
         assert ActionType.OBJECTIVE.value == "objective"
-

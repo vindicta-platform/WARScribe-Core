@@ -8,12 +8,12 @@ Abstract plugin base for edition-specific game rules. Supports runtime registrat
 
 ## Technical Context
 
-**Language/Version**: Python 3.11  
-**Primary Dependencies**: Abstract Base Classes  
-**Storage**: N/A  
-**Testing**: pytest  
-**Target Platform**: WARScribe-Core  
-**Project Type**: Backend library  
+**Language/Version**: Python 3.11
+**Primary Dependencies**: Abstract Base Classes
+**Storage**: N/A
+**Testing**: pytest
+**Target Platform**: WARScribe-Core
+**Project Type**: Backend library
 
 ## Project Structure
 

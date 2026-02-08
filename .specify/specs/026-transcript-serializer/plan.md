@@ -8,12 +8,12 @@ Game transcript serialization to JSON with version tracking and integrity checks
 
 ## Technical Context
 
-**Language/Version**: Python 3.11  
-**Primary Dependencies**: Pydantic, orjson  
-**Storage**: N/A  
-**Testing**: pytest  
-**Target Platform**: WARScribe-Core  
-**Project Type**: Backend library  
+**Language/Version**: Python 3.11
+**Primary Dependencies**: Pydantic, orjson
+**Storage**: N/A
+**Testing**: pytest
+**Target Platform**: WARScribe-Core
+**Project Type**: Backend library
 
 ## Project Structure
 

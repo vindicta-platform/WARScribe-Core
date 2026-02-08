@@ -1,0 +1,13 @@
+{
+    // WARScribe-Core Markdownlint Configuration
+    // Profile: universal-minimal
+    "config": {
+        "default": true,
+        // MD013 — Line length: disabled for prose-heavy docs
+        "MD013": false,
+        // MD033 — Inline HTML: allow for badges, images, details/summary
+        "MD033": false,
+        // MD041 — First line heading: disabled for files with frontmatter
+        "MD041": false
+    }
+}

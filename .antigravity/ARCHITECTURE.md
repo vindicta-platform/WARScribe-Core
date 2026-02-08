@@ -35,10 +35,10 @@ graph TD
     C --> D[AST]
     D --> E[Validator]
     E --> F[Domain Models]
-    
+
     G[Edition Plugin] --> C
     G --> E
-    
+
     F --> H[Serializer]
     H --> I[JSON/YAML/Text]
 ```

@@ -8,12 +8,12 @@ Standardized action notation schema for game event recording. JSON Schema compat
 
 ## Technical Context
 
-**Language/Version**: Python 3.11  
-**Primary Dependencies**: Pydantic, JSON Schema  
-**Storage**: N/A  
-**Testing**: pytest  
-**Target Platform**: WARScribe-Core  
-**Project Type**: Backend library  
+**Language/Version**: Python 3.11
+**Primary Dependencies**: Pydantic, JSON Schema
+**Storage**: N/A
+**Testing**: pytest
+**Target Platform**: WARScribe-Core
+**Project Type**: Backend library
 
 ## Project Structure
 
