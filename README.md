@@ -29,25 +29,25 @@ class CustomEditionPlugin(EditionPlugin):
     def edition_name(self) -> str:
         """Edition identifier (e.g., '10th', '11th')."""
         return "11th"
-    
+
     @property
     def version(self) -> str:
         """Edition version string (e.g., '11.0.0')."""
         return "11.0.0"
-    
+
     def validate_movement(self, unit: Unit, distance: int) -> bool:
         """Check if unit movement is legal."""
         return distance <= unit.movement
-    
+
     def validate_action(self, action: Action) -> tuple[bool, Optional[str]]:
         """Validate game action against edition rules.
-        
+
         Returns:
             (is_valid, error_message) tuple
         """
         # Custom validation logic
         return (True, None)
-    
+
     def calculate_hit_rolls(
         self, weapon_skill: int, target_toughness: int, modifiers: dict
     ) -> int:
@@ -130,11 +130,11 @@ class NinthEditionPlugin(EditionPlugin):
     @property
     def edition_name(self) -> str:
         return "Warhammer 40,000 9th Edition"
-    
+
     @property
     def edition_code(self) -> str:
         return "9th"
-    
+
     @property
     def phases(self) -> Sequence[PhaseDefinition]:
         return [
@@ -158,7 +158,7 @@ class NinthEditionPlugin(EditionPlugin):
             ),
             # ... additional phases
         ]
-    
+
     def validate_action(
         self, action: Action, game_state: Optional[Any] = None
     ) -> ValidationResult:

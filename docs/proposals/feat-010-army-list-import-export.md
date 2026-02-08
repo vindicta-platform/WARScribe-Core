@@ -1,11 +1,11 @@
 # Feature Proposal: Army List Import/Export Hub
 
-**Proposal ID**: FEAT-010  
-**Author**: Unified Product Architect (Autonomous)  
-**Created**: 2026-02-01  
-**Status**: Draft  
-**Priority**: Critical  
-**Target Repository**: WARScribe-Core  
+**Proposal ID**: FEAT-010
+**Author**: Unified Product Architect (Autonomous)
+**Created**: 2026-02-01
+**Status**: Draft
+**Priority**: Critical
+**Target Repository**: WARScribe-Core
 
 ---
 
@@ -18,13 +18,14 @@ Create a universal army list import/export hub supporting multiple formats (Batt
 ### 2. System Architecture
 
 #### 2.1 Current State
+
 - WARScribe notation engine (JSON schema)
 - No import from other formats
 - Limited export options
 
 #### 2.2 Proposed Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Import/Export Hub                            │
 │  ┌─────────────────────────────────────────────────────────┐    │
@@ -52,7 +53,7 @@ Create a universal army list import/export hub supporting multiple formats (Batt
 
 #### 2.3 File Changes
 
-```
+```text
 WARScribe-Core/
 ├── src/
 │   └── warscribe/
@@ -72,34 +73,34 @@ WARScribe-Core/
 
 ### 3. Supported Formats
 
-| Format | Import | Export | Notes |
-|--------|--------|--------|-------|
-| WARScribe JSON | ✅ | ✅ | Canonical format |
-| BattleScribe XML (.ros) | ✅ | ✅ | Most popular |
-| BattleScribe Zip (.rosz) | ✅ | ✅ | Compressed XML |
-| NewRecruit JSON | ✅ | ✅ | Mobile app format |
-| Plain Text | ✅ | ✅ | Tournament submissions |
-| Tabletop Simulator | ❌ | ✅ | Export only |
+| Format                   | Import | Export | Notes                  |
+| ------------------------ | ------ | ------ | ---------------------- |
+| WARScribe JSON           | ✅      | ✅      | Canonical format       |
+| BattleScribe XML (.ros)  | ✅      | ✅      | Most popular           |
+| BattleScribe Zip (.rosz) | ✅      | ✅      | Compressed XML         |
+| NewRecruit JSON          | ✅      | ✅      | Mobile app format      |
+| Plain Text               | ✅      | ✅      | Tournament submissions |
+| Tabletop Simulator       | ❌      | ✅      | Export only            |
 
 ### 4. BattleScribe Adapter
 
 ```python
 class BattleScribeAdapter:
     """Import/export BattleScribe roster files."""
-    
+
     def import_ros(self, file: BinaryIO) -> ArmyList:
         """Parse BattleScribe .ros XML into ArmyList."""
-        
+
     def import_rosz(self, file: BinaryIO) -> ArmyList:
         """Decompress and parse .rosz file."""
-        
+
     def export_ros(self, army: ArmyList) -> bytes:
         """Export ArmyList to BattleScribe XML."""
 ```
 
 ### 5. Plain Text Parser (Tournament Format)
 
-```
+```text
 ++ ARMY FACTION: NECRONS ++
 ++ DETACHMENT: Hypercrypt Legion ++
 ++ POINTS: 2000 ++
@@ -129,18 +130,21 @@ BATTLELINE
 ### User Stories
 
 #### US-001: Import from BattleScribe
-**As a** competitive player  
-**I want to** import my BattleScribe lists  
+
+**As a** competitive player
+**I want to** import my BattleScribe lists
 **So that** I can use Vindicta tools without re-entering data
 
 #### US-002: Share Tournament List
-**As a** tournament organizer  
-**I want** players to export plain-text lists  
+
+**As a** tournament organizer
+**I want** players to export plain-text lists
 **So that** I can collect standardized submissions
 
 #### US-003: Cross-Platform Sync
-**As a** mobile user  
-**I want to** export to NewRecruit format  
+
+**As a** mobile user
+**I want to** export to NewRecruit format
 **So that** I can view my lists on my phone
 
 ### Acceptance Criteria
@@ -173,14 +177,14 @@ Feature: Army List Import/Export
 
 ## Implementation Estimate
 
-| Phase | Effort | Dependencies |
-|-------|--------|--------------|
-| BattleScribe Adapter | 10 hours | XML parsing |
-| NewRecruit Adapter | 4 hours | JSON schema |
-| PlainText Parser | 6 hours | Regex patterns |
-| Format Router | 3 hours | None |
-| Testing | 6 hours | Sample files |
-| **Total** | **29 hours** | |
+| Phase                | Effort       | Dependencies   |
+| -------------------- | ------------ | -------------- |
+| BattleScribe Adapter | 10 hours     | XML parsing    |
+| NewRecruit Adapter   | 4 hours      | JSON schema    |
+| PlainText Parser     | 6 hours      | Regex patterns |
+| Format Router        | 3 hours      | None           |
+| Testing              | 6 hours      | Sample files   |
+| **Total**            | **29 hours** |                |
 
 ---
 

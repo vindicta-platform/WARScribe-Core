@@ -1,8 +1,8 @@
 # Feature Specification: Edition Plugin System
 
-**Feature Branch**: `024-edition-plugins`  
-**Created**: 2026-02-06  
-**Status**: Draft  
+**Feature Branch**: `024-edition-plugins`
+**Created**: 2026-02-06
+**Status**: Draft
 **Target**: Week 2 | **Repository**: WARScribe-Core
 
 ## User Scenarios & Testing
@@ -29,5 +29,6 @@ System loads and validates edition-specific rule plugins.
 - **EditionPlugin**: editionId, validate(), calculateHits()
 
 ## Success Criteria
+
 - **SC-001**: Plugin loads in under 100ms
 - **SC-002**: 10th Ed plugin fully functional
