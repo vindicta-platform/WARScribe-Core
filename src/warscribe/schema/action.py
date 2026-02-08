@@ -111,9 +111,23 @@ class ShootAction(BaseAction):
     
     # Weapon info
     weapon_name: str = Field(..., description="Weapon used")
+    weapon_profile: dict[str, str] = Field(
+        default_factory=dict, 
+        description="Key stats (S, AP, D, etc.)"
+    )
     shots: int = Field(..., ge=1, description="Number of shots")
     
+    # Modifiers
+    modifiers: list[str] = Field(
+        default_factory=list,
+        description="Active modifiers (e.g. 'heavy', 'cover')"
+    )
+    
     # Dice results
+    dice_rolls: dict[str, list[int]] = Field(
+        default_factory=dict,
+        description="Raw dice results by step (hit, wound, save)"
+    )
     hits: int = Field(0, ge=0)
     wounds: int = Field(0, ge=0)
     saves_failed: int = Field(0, ge=0)
@@ -147,9 +161,23 @@ class FightAction(BaseAction):
     
     # Weapon info
     weapon_name: str = Field(..., description="Melee weapon used")
+    weapon_profile: dict[str, str] = Field(
+        default_factory=dict, 
+        description="Key stats (S, AP, D, etc.)"
+    )
     attacks: int = Field(..., ge=1, description="Number of attacks")
     
+    # Modifiers
+    modifiers: list[str] = Field(
+        default_factory=list,
+        description="Active modifiers (e.g. 'lance', 'sustained')"
+    )
+    
     # Dice results
+    dice_rolls: dict[str, list[int]] = Field(
+        default_factory=dict,
+        description="Raw dice results by step (hit, wound, save)"
+    )
     hits: int = Field(0, ge=0)
     wounds: int = Field(0, ge=0)
     saves_failed: int = Field(0, ge=0)
