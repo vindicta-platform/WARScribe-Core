@@ -6,7 +6,7 @@ Implements Warhammer 40,000 10th Edition rules.
 
 from typing import Any, Optional, Sequence
 
-from warscribe.edition import (
+from warscribe.edition.plugin import (
     EditionPlugin,
     GamePhase,
     PhaseDefinition,
@@ -261,3 +261,5 @@ def _register() -> None:
     """Register the 10th Edition plugin."""
     from warscribe.edition import register_edition
     register_edition(TenthEditionPlugin(), set_default=True)
+
+_register()
